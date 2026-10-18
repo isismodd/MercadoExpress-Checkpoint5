@@ -29,6 +29,7 @@ Evolução do **MercadoExpress_CP04**. O sistema de gestão do Mercado Express (
 | Lombok | Redução de boilerplate |
 | Bootstrap 5 (WebJars) | Layout |
 | Docker + Render | Deploy |
+| InteliJ | IDE utilizada |
 
 ## Banco de dados (application.yml)
 | Tabela | Colunas |
@@ -176,11 +177,6 @@ POST http://localhost:8082/api/compras
 ```
 Resposta `202 Accepted` com `status: PENDENTE`; consulte `GET /api/compras/{id}` e veja virar `APROVADA` (ou `RECUSADA`).
 
-## Configuração do banco para o professor (Java Advanced)
-- Banco: PostgreSQL, database `mercadoexpress`, porta 5432
-- URL: `jdbc:postgresql://HOST:5432/mercadoexpress`
-- Usuário: `____` / Senha: `____` (preencher ao enviar)
-- As tabelas são criadas automaticamente (`ddl-auto: update`).
 
 
 7. Dashboard da gerência com vendas, lucro e estoque.
