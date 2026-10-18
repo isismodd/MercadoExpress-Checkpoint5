@@ -75,20 +75,43 @@ Acesse http://localhost:8082
    - `ADMIN_USERNAME`, `ADMIN_SENHA`
 
 ## Telas (prints e explicações)
-> Inserir um print e uma explicação para cada item.
 
 1. **Landing page (index.html)** – página inicial com os botões Entrar e Criar conta.
+<img width="2506" height="918" alt="image" src="https://github.com/user-attachments/assets/7fc9d90c-1523-41bd-a6fc-cb1d19216ff9" />
+
 2. **Login customizado** – tela própria, diferente da padrão do Spring Security.
+<img width="805" height="501" alt="image" src="https://github.com/user-attachments/assets/ddea05a3-5dff-47bd-a100-1a3ce362a1b3" />
+
 3. **Cadastro (Sign Up)** – validações de nome, usuário e senha; usuário duplicado é bloqueado.
+<img width="510" height="493" alt="image" src="https://github.com/user-attachments/assets/9217894a-614a-4d71-b22c-1788e82ef2e0" />
+
 4. **Lista de produtos como ADMIN** – com busca e botões Ver, Editar, Deletar e Novo.
+<img width="1458" height="396" alt="image" src="https://github.com/user-attachments/assets/14044c30-0417-4d54-93aa-1226f7736f46" />
+
 5. **Lista de produtos como USER** – somente leitura.
+<img width="1307" height="361" alt="image" src="https://github.com/user-attachments/assets/5e72257c-0834-4694-8e38-e7e04456a175" />
+
 6. **Detalhe do produto (Read)** – dados vindos da tabela `TDS_Sec_MVC_TB_Mercado`.
+<img width="1321" height="519" alt="image" src="https://github.com/user-attachments/assets/f4fe4770-428f-4762-9939-11e7c0f54146" />
+
 7. **Criar produto (Create)** e 8. **Editar produto (Update)**.
+<img width="1320" height="763" alt="image" src="https://github.com/user-attachments/assets/51ff32c0-14e1-4a0f-86c8-534483bf1cad" />
+<img width="1459" height="758" alt="image" src="https://github.com/user-attachments/assets/34ed564c-d46a-4569-a925-d5e76a3eb1b5" />
+
 9. **Deletar produto (Delete)** – com confirmação.
+<img width="1274" height="402" alt="image" src="https://github.com/user-attachments/assets/66a6f6f9-828c-4c1a-ba15-36cfc40d3a09" />
+
 10. **Acesso negado (403)** – USER tentando abrir `/web/produtos/novo`.
+<img width="2514" height="412" alt="image" src="https://github.com/user-attachments/assets/443eefe2-3342-4879-9602-aa215ff65922" />
+
 11. **Área ADMIN** – `/admin/usuarios`.
+<img width="1405" height="292" alt="image" src="https://github.com/user-attachments/assets/1dbfd601-2653-4e05-889e-dc5cf6135faf" />
+
 12. **Banco PostgreSQL** – `SELECT * FROM TDS_Users_Mercado;` mostrando a senha criptografada.
+<img width="1009" height="556" alt="image" src="https://github.com/user-attachments/assets/ed16ef20-68b0-4b7a-aa31-8f6c8e7e2516" />
+
 13. **Deploy no Render** funcionando.
+<img width="1906" height="778" alt="image" src="https://github.com/user-attachments/assets/6146d92e-a50e-44f5-9c7d-790c0bb61d27" />
 
 ---
 
