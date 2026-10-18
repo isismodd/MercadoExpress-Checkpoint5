@@ -182,4 +182,19 @@ Resposta `202 Accepted` com `status: PENDENTE`; consulte `GET /api/compras/{id}`
 7. Dashboard da gerência com vendas, lucro e estoque.
 
 ## Prints da Parte 2
-Tela de carrinho, status da compra, Dashboard do RabbitMQ (exchange/filas), Postman, e-mail recebido, `TDS_Email_Log` no banco e Dashboard da gerência.
+Tela de carrinho
+<img width="1222" height="594" alt="image" src="https://github.com/user-attachments/assets/26db6ba1-8a73-4539-902b-95199f1b7d6a" />
+
+status da compra
+
+Dashboard do RabbitMQ (exchange/filas)
+<img width="1335" height="756" alt="image" src="https://github.com/user-attachments/assets/717c944e-98de-44fd-8ffd-0c29da52a34a" />
+
+Postman
+
+e-mail recebido
+<img width="948" height="339" alt="image" src="https://github.com/user-attachments/assets/24a7218d-d63b-494f-b84b-152353d169e5" />
+
+`TDS_Email_Log` no banco e Dashboard da gerência.
+<img width="1227" height="562" alt="image" src="https://github.com/user-attachments/assets/34b7bfa9-3828-4530-8cf6-bb709fce10b1" />
+
