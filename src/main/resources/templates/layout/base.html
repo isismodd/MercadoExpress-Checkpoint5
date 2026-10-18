@@ -13,20 +13,26 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="/">Mercado Express</a>
+        <a class="navbar-brand" href="/web/produtos">Mercado Express</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/web/produtos"> Produtos</a>
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+                <li class="nav-item"><a class="nav-link" href="/web/produtos">Produtos</a></li>
+                <li class="nav-item"><a class="nav-link" href="/loja">Loja</a></li>
+                <li class="nav-item" th:if="${isAdmin}"><a class="nav-link" href="/web/produtos/novo">Novo</a></li>
+                <li class="nav-item" th:if="${isAdmin}"><a class="nav-link" href="/admin/dashboard">Dashboard</a></li>
+                <li class="nav-item" th:if="${isAdmin}"><a class="nav-link" href="/admin/usuarios">Usuários</a></li>
+                <li class="nav-item text-white-50 mx-lg-3" th:if="${usuarioLogado}">
+                    <span th:text="${usuarioLogado}"></span>
+                    <span class="badge" th:classappend="${isAdmin} ? 'bg-danger' : 'bg-secondary'"
+                          th:text="${isAdmin} ? 'ADMIN' : 'USER'"></span>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/web/produtos/novo"> Novo</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout"> Sair</a>
+                    <form th:action="@{/logout}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-outline-light btn-sm">Sair</button>
+                    </form>
                 </li>
             </ul>
         </div>
@@ -34,9 +40,13 @@
 </nav>
 
 <div class="container mt-4">
-    <!-- Mensagem de sucesso -->
     <div th:if="${mensagem}" class="alert alert-success alert-dismissible fade show" role="alert">
         <span th:text="${mensagem}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div th:if="${erro}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${erro}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 

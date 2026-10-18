@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado Express</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        .hero-section {
+            background: url('https://www.bluehost.com/blog/wp-content/uploads/2023/09/eCommerce-statistics.png') no-repeat center center;
+            background-size: cover; min-height: 100vh; display: flex; align-items: center; position: relative;
+        }
+        .hero-section::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,.55); }
+        .hero-content { position: relative; z-index: 1; color: #fff; padding: 2rem; text-align: right; }
+        .hero-content h1 { font-size: 4rem; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,.5); }
+        .hero-content p { font-size: 1.5rem; }
+        .btn-hero { margin-left: 10px; margin-top: 10px; border-width: 2px; background: rgba(255,255,255,.15) !important; color: #fff; }
+        .btn-hero:hover { background: rgba(255,255,255,.3) !important; color: #fff; }
+        .hr-right { background: #fff; opacity: .5; width: 100px; margin-left: auto; margin-right: 0; }
+        @media (max-width: 768px) { .hero-content h1 { font-size: 2.5rem; } .hero-content p { font-size: 1.2rem; } }
+    </style>
+</head>
+<body>
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Mercado Express</h1>
+            <p>Sistema de gestão de produtos</p>
+            <hr class="hr-right">
+            <a href="/login" class="btn btn-outline-primary btn-lg btn-hero">Entrar</a>
+            <a href="/cadastro" class="btn btn-outline-success btn-lg btn-hero">Criar conta</a>
+        </div>
+    </div>
+</div>
+<script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

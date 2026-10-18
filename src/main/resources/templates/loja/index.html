@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::page})}">
+<head>
+    <title>Loja</title>
+</head>
+<body>
+<div th:fragment="page">
+    <h1>Loja - Carrinho</h1>
+    <p class="text-muted">Escolha a quantidade dos produtos, informe seus dados e finalize. O pagamento é processado pelo Banco Tranquilo via RabbitMQ.</p>
+
+    <form th:action="@{/loja/comprar}" method="post">
+        <table class="table table-striped align-middle">
+            <thead class="table-dark">
+            <tr><th>Produto</th><th>Setor</th><th>Preço</th><th>Estoque</th><th style="width:130px">Quantidade</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${produtos}">
+                <td th:text="${p.nome}"></td>
+                <td th:text="${p.setor}"></td>
+                <td th:text="'R$ ' + ${p.preco}"></td>
+                <td th:text="${p.estoque} ?: 0"></td>
+                <td>
+                    <input type="number" min="0" th:max="${p.estoque} ?: 0" value="0"
+                           class="form-control form-control-sm qtd"
+                           th:name="'qtd_' + ${p.id}" th:attr="data-preco=${p.preco}"
+                           th:disabled="${(p.estoque ?: 0) == 0}">
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(produtos)}"><td colspan="5" class="text-center">Nenhum produto cadastrado.</td></tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-secondary fs-5">Total do carrinho: <strong>R$ <span id="total">0.00</span></strong></div>
+
+        <div class="card mb-4">
+            <div class="card-header">Dados do cliente e pagamento</div>
+            <div class="card-body row g-3">
+                <div class="col-md-4">
+                    <label class="form-label" for="clienteNome">Nome</label>
+                    <input type="text" id="clienteNome" name="clienteNome" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" for="clienteEmail">E-mail (recebe a confirmação)</label>
+                    <input type="email" id="clienteEmail" name="clienteEmail" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" for="numeroCartao">Cartão</label>
+                    <input type="text" id="numeroCartao" name="numeroCartao" class="form-control" maxlength="19"
+                           placeholder="4111 1111 1111 1111" autocomplete="off" required>
+                    <div class="form-text">Teste: terminado em 0000 é recusado.</div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success btn-lg">Finalizar compra</button>
+    </form>
+
+    <script>
+        document.querySelectorAll('.qtd').forEach(function (el) {
+            el.addEventListener('input', function () {
+                var total = 0;
+                document.querySelectorAll('.qtd').forEach(function (i) {
+                    total += (parseInt(i.value) || 0) * parseFloat(i.dataset.preco);
+                });
+                document.getElementById('total').textContent = total.toFixed(2);
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

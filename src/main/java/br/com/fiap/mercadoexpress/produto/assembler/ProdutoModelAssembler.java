@@ -21,7 +21,9 @@ public class ProdutoModelAssembler implements RepresentationModelAssembler<Produ
                 produto.getTipo(),
                 produto.getSetor(),
                 produto.getTamanho(),
-                produto.getPreco()
+                produto.getPreco(),
+                produto.getCusto(),
+                produto.getEstoque()
         );
 
         return EntityModel.of(response,

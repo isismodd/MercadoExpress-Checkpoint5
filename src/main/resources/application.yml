@@ -1,0 +1,54 @@
+server:
+  port: ${PORT:8082}
+
+spring:
+  application:
+    name: mercadoexpress
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/mercadoexpress}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  thymeleaf:
+    cache: false
+
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USER:guest}
+    password: ${RABBIT_PASSWORD:guest}
+    virtual-host: ${RABBIT_VHOST:/}
+    listener:
+      simple:
+        default-requeue-rejected: false   # mensagens com erro vão para a DLQ
+
+  # ---- Parte 2: e-mail (SMTP) ----
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+# Usuário ADMIN criado automaticamente na primeira execução
+app:
+  admin:
+    username: ${ADMIN_USERNAME:admin}
+    senha: ${ADMIN_SENHA:admin123}
+  mail:
+    from: ${MAIL_FROM:${MAIL_USERNAME:no-reply@mercadoexpress.com}}
+
+# API do Banco Tranquilo (por padrão aponta para o simulador embutido nesta aplicação)
+banco:
+  tranquilo:
+    url: ${BANCO_URL:http://localhost:8082}
+    path: ${BANCO_PATH:/banco-tranquilo/api/pagamentos}

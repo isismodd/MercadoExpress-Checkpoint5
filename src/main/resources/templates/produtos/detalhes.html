@@ -32,13 +32,19 @@
 
                 <dt class="col-sm-3">Preço:</dt>
                 <dd class="col-sm-9" th:text="'R$ ' + ${produto.preco}">R$ 10.00</dd>
+
+                <dt class="col-sm-3" th:if="${isAdmin}">Custo:</dt>
+                <dd class="col-sm-9" th:if="${isAdmin}" th:text="'R$ ' + ${produto.custo}">R$ 5.00</dd>
+
+                <dt class="col-sm-3">Estoque:</dt>
+                <dd class="col-sm-9" th:text="${produto.estoque} ?: 0">0</dd>
             </dl>
 
             <div class="d-flex gap-2 mt-3">
-                <a th:href="@{/web/produtos/{id}/editar(id=${produto.id})}" class="btn btn-outline-warning">
+                <a th:if="${isAdmin}" th:href="@{/web/produtos/{id}/editar(id=${produto.id})}" class="btn btn-outline-warning">
                     <i class="fas fa-edit me-2"></i> Editar
                 </a>
-                <form th:action="@{/web/produtos/{id}/delete(id=${produto.id})}" method="post" style="display:inline;">
+                <form th:if="${isAdmin}" th:action="@{/web/produtos/{id}/delete(id=${produto.id})}" method="post" style="display:inline;">
                     <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Deletar?')">
                         <i class="fas fa-trash me-2"></i> Deletar
                     </button>

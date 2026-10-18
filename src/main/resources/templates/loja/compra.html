@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::page})}">
+<head>
+    <title>Compra</title>
+</head>
+<body>
+<div th:fragment="page">
+    <h1>Compra #<span th:text="${compra.id}"></span></h1>
+
+    <div class="alert" th:classappend="${compra.status == 'APROVADA'} ? 'alert-success' : (${compra.status == 'RECUSADA'} ? 'alert-danger' : 'alert-warning')">
+        <strong>Status: <span th:text="${compra.status}"></span></strong>
+        <span th:if="${compra.status == 'PENDENTE'}"> - aguardando resposta do Banco Tranquilo (a página atualiza sozinha)...</span>
+        <div th:if="${compra.mensagemBanco}">Banco: <span th:text="${compra.mensagemBanco}"></span></div>
+        <div th:if="${compra.transacaoId}">Transação: <span th:text="${compra.transacaoId}"></span></div>
+    </div>
+
+    <p>Cliente: <strong th:text="${compra.clienteNome}"></strong> (<span th:text="${compra.clienteEmail}"></span>)</p>
+
+    <table class="table table-striped">
+        <thead class="table-dark"><tr><th>Produto</th><th>Qtd</th><th>Preço unit.</th></tr></thead>
+        <tbody>
+        <tr th:each="i : ${compra.itens}">
+            <td th:text="${i.produtoNome}"></td>
+            <td th:text="${i.quantidade}"></td>
+            <td th:text="'R$ ' + ${i.precoUnitario}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <p class="fs-5">Total: <strong>R$ <span th:text="${compra.total}"></span></strong></p>
+
+    <div th:if="${compra.status == 'APROVADA'}">
+        <h5>E-mail de confirmação</h5>
+        <p th:if="${#lists.isEmpty(emails)}" class="text-muted">Ainda não registrado...</p>
+        <ul>
+            <li th:each="e : ${emails}">
+                <span class="badge" th:classappend="${e.status == 'ENVIADO'} ? 'bg-success' : 'bg-danger'" th:text="${e.status}"></span>
+                para <span th:text="${e.destinatario}"></span>
+                <small class="text-danger" th:if="${e.erro}" th:text="${e.erro}"></small>
+            </li>
+        </ul>
+    </div>
+
+    <a href="/loja" class="btn btn-outline-dark">Nova compra</a>
+
+    <script th:if="${compra.status == 'PENDENTE'}">
+        setTimeout(function () { location.reload(); }, 2500);
+    </script>
+</div>
+</body>
+</html>

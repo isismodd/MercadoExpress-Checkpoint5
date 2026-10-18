@@ -7,17 +7,20 @@
 <div th:fragment="page">
     <h1>Produtos</h1>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <a href="/web/produtos/novo"  class="btn btn-outline-success mb-3">Novo Produto</a>
+
+    <div class="d-flex flex-wrap gap-2 mb-3">
+        <form th:action="@{/web/produtos}" method="get" class="d-flex gap-2">
+            <input type="text" name="busca" th:value="${busca}" class="form-control" placeholder="Buscar por nome...">
+            <button type="submit" class="btn btn-outline-primary">Buscar</button>
+            <a th:href="@{/web/produtos}" class="btn btn-outline-secondary">Limpar</a>
+        </form>
+        <a th:if="${isAdmin}" href="/web/produtos/novo" class="btn btn-outline-success ms-auto">Novo Produto</a>
+    </div>
 
     <table class="table table-striped">
         <thead class="table-dark">
         <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Tipo</th>
-            <th>Setor</th>
-            <th>Preço</th>
-            <th>Ações</th>
+            <th>ID</th><th>Nome</th><th>Tipo</th><th>Setor</th><th>Preço</th><th>Estoque</th><th>Ações</th>
         </tr>
         </thead>
         <tbody>
@@ -27,20 +30,22 @@
             <td th:text="${p.tipo}"></td>
             <td th:text="${p.setor}"></td>
             <td th:text="'R$ ' + ${p.preco}"></td>
+            <td th:text="${p.estoque} ?: 0"></td>
             <td>
-                <a th:href="@{/web/produtos/{id}(id=${p.id})}" class="btn btn-outline" style="width: 34px; height: 34px; padding: 0; display: inline-flex; align-items: center; justify-content: center; font-size: 18px;">
+                <a th:href="@{/web/produtos/{id}(id=${p.id})}" class="btn btn-outline-secondary btn-sm" title="Ver">
                     <i class="fa-regular fa-eye"></i>
                 </a>
-                <a th:href="@{/web/produtos/{id}/editar(id=${p.id})}" class="btn btn-outline" style="width: 34px; height: 34px; padding: 0; display: inline-flex; align-items: center; justify-content: center; font-size: 18px;">
+                <a th:if="${isAdmin}" th:href="@{/web/produtos/{id}/editar(id=${p.id})}" class="btn btn-outline-warning btn-sm" title="Editar">
                     <i class="fa-regular fa-pen-to-square"></i>
                 </a>
-                <form th:action="@{/web/produtos/{id}/delete(id=${p.id})}" method="post" style="display:inline;">
-                    <button type="submit" class="btn btn-outline" style="width: 34px; height: 34px; padding: 0; display: inline-flex; align-items: center; justify-content: center; font-size: 18px;" onclick="return confirm('Deletar?')">
+                <form th:if="${isAdmin}" th:action="@{/web/produtos/{id}/delete(id=${p.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-outline-danger btn-sm" title="Deletar" onclick="return confirm('Deletar?')">
                         <i class="fa-regular fa-trash-can"></i>
                     </button>
                 </form>
             </td>
         </tr>
+        <tr th:if="${#lists.isEmpty(produtos)}"><td colspan="7" class="text-center">Nenhum produto encontrado.</td></tr>
         </tbody>
     </table>
 </div>

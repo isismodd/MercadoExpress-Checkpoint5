@@ -16,7 +16,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "TDS_TB_MERCADO")
+@Table(name = "TDS_Sec_MVC_TB_Mercado")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -44,4 +44,10 @@ public class Produto {
 
     @Column(name = "PRECO", nullable = false, precision = 10, scale = 2)
     private BigDecimal preco;
+
+    @Column(name = "CUSTO", precision = 10, scale = 2)
+    private BigDecimal custo;
+
+    @Column(name = "ESTOQUE")
+    private Integer estoque;
 }

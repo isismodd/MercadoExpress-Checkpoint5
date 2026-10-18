@@ -8,6 +8,8 @@ public record ProdutoResponse(
         String tipo,
         String setor,
         String tamanho,
-        BigDecimal preco
+        BigDecimal preco,
+        BigDecimal custo,
+        Integer estoque
 ) {
 }

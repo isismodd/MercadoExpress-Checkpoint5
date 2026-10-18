@@ -43,6 +43,17 @@
                     <input type="number" step="0.01" id="preco" th:field="*{preco}" class="form-control" required>
                 </div>
 
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="custo" class="form-label">Custo</label>
+                        <input type="number" step="0.01" min="0" id="custo" th:field="*{custo}" class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="estoque" class="form-label">Estoque</label>
+                        <input type="number" min="0" id="estoque" th:field="*{estoque}" class="form-control">
+                    </div>
+                </div>
+
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-success">
                         <i class="fas fa-save me-2"></i> Salvar

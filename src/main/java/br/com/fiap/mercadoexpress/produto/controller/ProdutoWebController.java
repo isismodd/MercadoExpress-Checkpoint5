@@ -18,8 +18,10 @@ public class ProdutoWebController {
 
     // LISTAR todos os produtos
     @GetMapping
-    public String listarProdutos(Model model) {
-        model.addAttribute("produtos", produtoService.findAll());
+    public String listarProdutos(@RequestParam(required = false) String busca, Model model) {
+        boolean semBusca = busca == null || busca.isBlank();
+        model.addAttribute("produtos", semBusca ? produtoService.findAll() : produtoService.search(busca));
+        model.addAttribute("busca", busca);
         return "produtos/lista";
     }
 
@@ -27,7 +29,7 @@ public class ProdutoWebController {
     @GetMapping("/novo")
     public String mostrarFormularioCriacao(Model model) {
         // Criar um ProdutoRequest vazio usando o Record
-        model.addAttribute("produto", new ProdutoRequest("", "", "", "", null));
+        model.addAttribute("produto", new ProdutoRequest("", "", "", "", null, null, 0));
         return "produtos/cadastro";
     }
 
@@ -59,7 +61,9 @@ public class ProdutoWebController {
                 produto.getTipo(),
                 produto.getSetor(),
                 produto.getTamanho(),
-                produto.getPreco()
+                produto.getPreco(),
+                produto.getCusto(),
+                produto.getEstoque()
         );
 
         model.addAttribute("produto", request);

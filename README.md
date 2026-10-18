@@ -1,121 +1,169 @@
-# MercadoExpress_CP04
+# MercadoExpress_CP05 – Spring Security MVC + PostgreSQL
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.0-brightgreen)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-21-orange)](https://adoptium.net/)
-[![Oracle](https://img.shields.io/badge/Oracle-Database-red)](https://www.oracle.com/br/database/)
-[![Lombok](https://img.shields.io/badge/Lombok-1.18.30-purple)](https://projectlombok.org/)
-[![HATEOAS](https://img.shields.io/badge/HATEOAS-Nível%203-blue)](https://restfulapi.net/hateoas/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-blue)](https://www.postgresql.org/)
+[![Spring Security](https://img.shields.io/badge/Spring%20Security-green)](https://spring.io/projects/spring-security)
+[![Lombok](https://img.shields.io/badge/Lombok-purple)](https://projectlombok.org/)
 
-## Sobre o Projeto
+## Link de produção
+**COLE AQUI O LINK DO RENDER**
 
-Esse é um sistema de gestão para uma empresa do tipo Mercado Express. A aplicação implementa um CRUD completo (Create, Read, Update, Delete) para o gerenciamento de produtos, utilizando Spring Boot e integração com banco de dados Oracle.
+## Integrantes
+- Nome – RM
 
-O projeto foi desenvolvido seguindo os princípios do HATEOAS (Nível 3 de Maturidade de Richardson) e utiliza o Lombok para reduzir a verbosidade do código, garantindo um código mais limpo.
+## Sobre o projeto
+Evolução do **MercadoExpress_CP04**. O sistema de gestão do Mercado Express (CRUD de produtos) agora usa **PostgreSQL**, tem **login customizado**, **cadastro de usuários (Sign Up)** e **controle de acesso por perfil (ADMIN e USER)** com Spring Security. A API REST/HATEOAS do CP4 foi mantida em `/mercado` e também passou a ser protegida.
 
----
+## Tecnologias
+| Tecnologia | Descrição |
+|---|---|
+| Java 21 / Spring Boot 4.1.0 | Base do projeto |
+| Spring MVC + Thymeleaf | Interface web |
+| Spring Security | Autenticação, autorização e BCrypt |
+| Spring Data JPA + PostgreSQL | Persistência |
+| Spring HATEOAS + SpringDoc | API REST do CP4 (Swagger) |
+| Lombok | Redução de boilerplate |
+| Bootstrap 5 (WebJars) | Layout |
+| Docker + Render | Deploy |
 
-## Tecnologias Utilizadas
+## Banco de dados (application.yml)
+| Tabela | Colunas |
+|---|---|
+| `TDS_Sec_MVC_TB_Mercado` | id, nome, tipo, setor, tamanho, preco |
+| `TDS_Users_Mercado` | id, nome, username (único), senha (BCrypt), perfil (ADMIN/USER) |
 
-### Backend
-| Tecnologia | Versão | Descrição |
-|------------|--------|-----------|
-| **Java** | 21 | Linguagem de programação |
-| **Spring Boot** | 4.1.0 | Framework principal |
-| **Spring Data JPA** | 4.1.0 | Persistência com JPA/Hibernate |
-| **Spring HATEOAS** | 4.1.0 | Implementação do Nível 3 de Richardson |
-| **Spring Validation** | 4.1.0 | Validação de dados com Bean Validation |
-| **Spring Web MVC** | 4.1.0 | API REST com Spring MVC |
-| **Oracle JDBC** | 11.x | conexão com Oracle Database |
-| **Lombok** | 1.18.30 | Redução de código boilerplate |
-| **SpringDoc OpenAPI** | 3.1.0 | Swagger |
+As tabelas são criadas automaticamente (`ddl-auto: update`).
 
-### Ferramentas
-- **Maven** - Gerenciamento de dependências
-- **Insomnia/Postman** - Testes de API
-- **Oracle SQL Developer** - Gerenciamento do banco de dados
-- **Git/GitHub** - Controle de versão
+## Perfis e rotas
+| Rota | Público | USER | ADMIN |
+|---|:-:|:-:|:-:|
+| `/` (index.html), `/login`, `/cadastro` | ✅ | ✅ | ✅ |
+| `GET /web/produtos`, `GET /web/produtos/{id}` (Read) | ❌ | ✅ | ✅ |
+| `GET /web/produtos/novo` + `POST /web/produtos` (Create) | ❌ | ❌ | ✅ |
+| `GET /web/produtos/{id}/editar` + `POST /web/produtos/{id}` (Update) | ❌ | ❌ | ✅ |
+| `POST /web/produtos/{id}/delete` (Delete) | ❌ | ❌ | ✅ |
+| `GET /admin/usuarios` (lista de usuários) | ❌ | ❌ | ✅ |
+| `GET /mercado/**` (API) | ❌ | ✅ (Basic) | ✅ (Basic) |
+| `POST/PUT/PATCH/DELETE /mercado/**` (API) | ❌ | ❌ | ✅ (Basic) |
 
-### SPRING INITIALIZR
-<img width="1027" height="880" alt="SpringInitializr" src="https://github.com/user-attachments/assets/2e4ad4b6-69c8-4f8f-9eda-909b746fd4a1" />
+- O cadastro público cria sempre o perfil **USER**.
+- O **ADMIN** é criado na primeira execução com `ADMIN_USERNAME` / `ADMIN_SENHA` (padrão: `admin` / `admin123`).
+- Após o login, o usuário é redirecionado para `/web/produtos`. Os botões Novo/Editar/Deletar só aparecem para o ADMIN.
 
-### Deploy realizado no RENDER
-<img width="944" height="898" alt="deploy_live" src="https://github.com/user-attachments/assets/cefd4597-fe61-4ed7-96b4-7b9c2a066a27" />
-
----
-
-## Configuração e Instalação
-
-### Pré-requisitos
-
-- JDK 21 ou superior
-- Maven 3.8+ instalado
-- Acesso a uma instância do Oracle Database (Oracle_FIAP)
-- Insomnia ou Postman para testar os endpoints
-- Git (opcional, para clonar o repositório)
-
-### Passos para rodar o projeto localmente
-
-1. **Clone o repositório:**
-   ```
-   git clone https://github.com/pedromariutti/MercadoExpress_CP04.git
-   cd MercadoExpress_CP04
-   ```
-
-2. Configure o banco de dados no arquivo src/main/resources/application.properties:
-
-# Altere as variáveis abaixo conforme suas credenciais
-spring.datasource.url=jdbc:oracle:thin:@oracle.fiap.com.br:1521:orcl
-spring.datasource.username=SEU_RM_AQUI
-spring.datasource.password=SUA_SENHA_AQUI
-
-3. Execute o projeto com Maven:
+## Como rodar localmente
+```bash
+git clone https://github.com/SEU_USUARIO/MercadoExpress_CP05.git
+cd MercadoExpress_CP05
+createdb mercadoexpress
+export DB_URL=jdbc:postgresql://localhost:5432/mercadoexpress
+export DB_USERNAME=postgres
+export DB_PASSWORD=sua_senha
 mvn clean spring-boot:run
+```
+Acesse http://localhost:8082
 
-4. Acesse a aplicação:
+## Deploy no Render
+1. Criar um banco **PostgreSQL** no Render.
+2. Criar um **Web Service** com o repositório (Runtime: Docker).
+3. Variáveis de ambiente:
+   - `DB_URL` = `jdbc:postgresql://HOST:5432/NOME_DO_BANCO`
+   - `DB_USERNAME`, `DB_PASSWORD`
+   - `ADMIN_USERNAME`, `ADMIN_SENHA`
 
-API: https://mercadoexpress-cp04.onrender.com
+## Telas (prints e explicações)
+> Inserir um print e uma explicação para cada item.
 
-Swagger UI: https://mercadoexpress-cp04.onrender.com/swagger-ui/index.html
-
-OpenAPI Docs: https://mercadoexpress-cp04.onrender.com/v3/api-docs
-
-## Endpoints da API
-A API segue o padrão RESTful e está documentada com HATEOAS. Todos os endpoints retornam links para navegação entre os recursos.
-
-| Método | Endpoint | Descrição | Corpo da Requisição |
-|--------|----------|-----------|---------------------|
-| **POST** | `/mercado` | Adiciona um novo produto | ✅ JSON |
-| **GET** | `/mercado` | Lista todos os produtos | ❌ |
-| **GET** | `/mercado/{id}` | Busca um produto pelo ID | ❌ |
-| **PUT** | `/mercado/{id}` | Atualiza completamente um produto | ✅ JSON |
-| **PATCH** | `/mercado/{id}` | Atualiza parcialmente um produto | ✅ JSON |
-| **DELETE** | `/mercado/{id}` | Remove um produto pelo ID | ❌ |
-
-# Testes com Insomnia/Postman
-
-### GET 
-| `/mercado/` | `/mercado/{id}` |
-|------------|----------|
-| <img width="400" src="https://github.com/user-attachments/assets/ddc7bb0e-b39e-45fd-a88d-500177bb5362" /> | <img width="400" src="https://github.com/user-attachments/assets/744b7b84-b694-4d28-b4a5-0dbb470951de" /> |
-
----
-
-### POST `/mercado`
-<img width="400" src="https://github.com/user-attachments/assets/d3126211-f0b0-46fd-aa02-a734773a0e87" />
+1. **Landing page (index.html)** – página inicial com os botões Entrar e Criar conta.
+2. **Login customizado** – tela própria, diferente da padrão do Spring Security.
+3. **Cadastro (Sign Up)** – validações de nome, usuário e senha; usuário duplicado é bloqueado.
+4. **Lista de produtos como ADMIN** – com busca e botões Ver, Editar, Deletar e Novo.
+5. **Lista de produtos como USER** – somente leitura.
+6. **Detalhe do produto (Read)** – dados vindos da tabela `TDS_Sec_MVC_TB_Mercado`.
+7. **Criar produto (Create)** e 8. **Editar produto (Update)**.
+9. **Deletar produto (Delete)** – com confirmação.
+10. **Acesso negado (403)** – USER tentando abrir `/web/produtos/novo`.
+11. **Área ADMIN** – `/admin/usuarios`.
+12. **Banco PostgreSQL** – `SELECT * FROM TDS_Users_Mercado;` mostrando a senha criptografada.
+13. **Deploy no Render** funcionando.
 
 ---
 
-### PUT `/mercado/{id}`
-<img width="400" src="https://github.com/user-attachments/assets/7f2a4a3c-11c4-43e0-b396-9b42d152bf54" />
+# Parte 2 – Microsserviços com RabbitMQ/LavinMQ (Banco Tranquilo + e-mail)
 
----
+## Fluxo da compra
+```
+Cliente (tela /loja ou Postman)
+   │  POST /api/compras
+   ▼
+Mercado Express ── salva Compra PENDENTE (PostgreSQL)
+   │  publica PagamentoRequest
+   ▼
+[mercado.pagamentos.exchange] ──pagamento.requisicao──▶ [pagamento.requisicao.queue]
+                                                              │ consumidor "Banco"
+                                                              ▼
+                                              API do Banco Tranquilo (POST /banco-tranquilo/api/pagamentos)
+                                                              │ APROVADO / RECUSADO
+   ┌──────────────────────────────────────────────────────────┘
+   ▼
+[mercado.pagamentos.exchange] ──pagamento.resposta──▶ [pagamento.resposta.queue]
+   │ consumidor "Mercado"
+   ▼
+Atualiza compra (APROVADA/RECUSADA) → baixa estoque → envia e-mail (se aprovada) → grava em TDS_Email_Log
+```
+Mensagens com erro vão para `mercado.pagamentos.dlx` → `pagamento.dlq`.
 
-### PATCH `/mercado/{id}`
-<img width="400" src="https://github.com/user-attachments/assets/0e1a1dd7-465c-43ea-84e0-43751f673221" />
+| Item | Nome |
+|---|---|
+| Exchange | `mercado.pagamentos.exchange` (direct) |
+| Fila de requisição / routing key | `pagamento.requisicao.queue` / `pagamento.requisicao` |
+| Fila de resposta / routing key | `pagamento.resposta.queue` / `pagamento.resposta` |
+| Dead letter | `mercado.pagamentos.dlx` → `pagamento.dlq` |
 
----
+## Novas tabelas (PostgreSQL)
+- `TDS_Compras_Mercado`: id, cliente_nome, cliente_email, total, status, transacao_id, mensagem_banco, data_compra
+- `TDS_Itens_Compra`: id, compra_id, produto_id, produto_nome, quantidade, preco_unitario, custo_unitario
+- `TDS_Email_Log`: id, compra_id, destinatario, assunto, corpo, status (ENVIADO/FALHA), erro, data_envio
+- `TDS_Sec_MVC_TB_Mercado` ganhou as colunas `custo` e `estoque` (usadas no lucro e no estoque).
 
-### DELETE `/mercado/{id}`
-| Antes | Depois |
-|-------|--------|
-| <img width="400" src="https://github.com/user-attachments/assets/39f5a7d8-9801-4fa8-87b9-58321ceb3dd5" /> | <img width="400" src="https://github.com/user-attachments/assets/7f34647a-430e-4f41-a8ab-27da7a32d87c" /> |
+## Como executar
+1. **RabbitMQ local:** `docker compose up -d` e abrir o Dashboard em http://localhost:15672 (guest/guest).
+   Em nuvem (LavinMQ/CloudAMQP) defina `SPRING_RABBITMQ_ADDRESSES=amqps://usuario:senha@host/vhost`.
+2. **E-mail (SMTP):** defina `MAIL_USERNAME` e `MAIL_PASSWORD` (no Gmail use uma *senha de app*; também funciona com Mailtrap via `MAIL_HOST`, `MAIL_PORT`). Se o SMTP falhar, a compra continua aprovada e o e-mail é registrado como `FALHA` em `TDS_Email_Log`.
+3. Rodar a aplicação (`mvn spring-boot:run`) e entrar com um ADMIN. Cadastrar produtos **com estoque** (pela tela ou pelo Postman).
+4. **Tela de carrinho:** http://localhost:8082/loja
+5. **Dashboard da gerência:** http://localhost:8082/admin/dashboard (somente ADMIN).
+
+## API do Banco Tranquilo
+Por padrão a aplicação usa um **simulador embutido** (`POST /banco-tranquilo/api/pagamentos`). Regras: cartão terminado em `0000` → RECUSADO; valor acima de R$ 5.000 → RECUSADO; demais → APROVADO. Para usar a API real, altere `banco.tranquilo.url` e `banco.tranquilo.path` (variáveis `BANCO_URL` e `BANCO_PATH`).
+
+## Teste no Postman/Insomnia
+Importe `postman/MercadoExpress_CP05.postman_collection.json` (autenticação Basic com `admin`/`admin123`). Exemplo de requisição de compra (`postman/exemplo-compra.json`):
+```json
+POST http://localhost:8082/api/compras
+{
+  "clienteNome": "Maria Silva",
+  "clienteEmail": "maria@email.com",
+  "numeroCartao": "4111111111111111",
+  "itens": [ { "produtoId": 1, "quantidade": 2 } ]
+}
+```
+Resposta `202 Accepted` com `status: PENDENTE`; consulte `GET /api/compras/{id}` e veja virar `APROVADA` (ou `RECUSADA`).
+
+## Configuração do banco para o professor (Java Advanced)
+- Banco: PostgreSQL, database `mercadoexpress`, porta 5432
+- URL: `jdbc:postgresql://HOST:5432/mercadoexpress`
+- Usuário: `____` / Senha: `____` (preencher ao enviar)
+- As tabelas são criadas automaticamente (`ddl-auto: update`).
+
+## Roteiro do vídeo
+1. Dashboard do RabbitMQ: exchange, filas e bindings.
+2. Postman: compra aprovada → mostrar mensagem passando pelas filas (Queues → *Get messages* / gráficos de taxa).
+3. Console da aplicação com os logs `[RabbitMQ]`.
+4. Compra recusada (cartão final 0000).
+5. E-mail recebido e tabela `TDS_Email_Log` no pgAdmin.
+6. Tela `/loja` (carrinho) fazendo uma compra.
+7. Dashboard da gerência com vendas, lucro e estoque.
+
+## Prints da Parte 2
+Tela de carrinho, status da compra, Dashboard do RabbitMQ (exchange/filas), Postman, e-mail recebido, `TDS_Email_Log` no banco e Dashboard da gerência.
