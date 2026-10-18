@@ -7,10 +7,13 @@
 [![Lombok](https://img.shields.io/badge/Lombok-purple)](https://projectlombok.org/)
 
 ## Link de produção
-**COLE AQUI O LINK DO RENDER**
+**link**
 
 ## Integrantes
-- Nome – RM
+Ana Clara de Oliveira Nascimento | RM 561957
+Isis Macedo | RM 561497
+Henrique Pereira | RM 565608
+Rafael Carvalho Meireles | RM 563413
 
 ## Sobre o projeto
 Evolução do **MercadoExpress_CP04**. O sistema de gestão do Mercado Express (CRUD de produtos) agora usa **PostgreSQL**, tem **login customizado**, **cadastro de usuários (Sign Up)** e **controle de acesso por perfil (ADMIN e USER)** com Spring Security. A API REST/HATEOAS do CP4 foi mantida em `/mercado` e também passou a ser protegida.
@@ -48,11 +51,11 @@ As tabelas são criadas automaticamente (`ddl-auto: update`).
 | `POST/PUT/PATCH/DELETE /mercado/**` (API) | ❌ | ❌ | ✅ (Basic) |
 
 - O cadastro público cria sempre o perfil **USER**.
-- O **ADMIN** é criado na primeira execução com `ADMIN_USERNAME` / `ADMIN_SENHA` (padrão: `admin` / `admin123`).
+- O **ADMIN** é criado na primeira execução com `ADMIN_USERNAME` / `ADMIN_SENHA`.
 - Após o login, o usuário é redirecionado para `/web/produtos`. Os botões Novo/Editar/Deletar só aparecem para o ADMIN.
 
 ## Como rodar localmente
-```bash
+```
 git clone https://github.com/SEU_USUARIO/MercadoExpress_CP05.git
 cd MercadoExpress_CP05
 createdb mercadoexpress
@@ -156,13 +159,7 @@ Resposta `202 Accepted` com `status: PENDENTE`; consulte `GET /api/compras/{id}`
 - Usuário: `____` / Senha: `____` (preencher ao enviar)
 - As tabelas são criadas automaticamente (`ddl-auto: update`).
 
-## Roteiro do vídeo
-1. Dashboard do RabbitMQ: exchange, filas e bindings.
-2. Postman: compra aprovada → mostrar mensagem passando pelas filas (Queues → *Get messages* / gráficos de taxa).
-3. Console da aplicação com os logs `[RabbitMQ]`.
-4. Compra recusada (cartão final 0000).
-5. E-mail recebido e tabela `TDS_Email_Log` no pgAdmin.
-6. Tela `/loja` (carrinho) fazendo uma compra.
+
 7. Dashboard da gerência com vendas, lucro e estoque.
 
 ## Prints da Parte 2
