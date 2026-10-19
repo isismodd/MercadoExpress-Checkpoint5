@@ -1,207 +1,410 @@
 {
   "info": {
-    "name": "MercadoExpress CP05 - Parte 2",
+    "name": "MercadoExpress CP05 - Parte 2 (Render + Local)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "auth": {
-    "type": "basic",
-    "basic": [
-      {
-        "key": "username",
-        "value": "{{user}}",
-        "type": "string"
-      },
-      {
-        "key": "password",
-        "value": "{{pass}}",
-        "type": "string"
-      }
-    ]
   },
   "variable": [
     {
       "key": "baseUrl",
-      "value": "http://localhost:8082"
+      "value": "https://mercadoexpress-checkpoint5.onrender.com"
     },
     {
-      "key": "user",
+      "key": "userProd",
       "value": "admin"
     },
     {
-      "key": "pass",
+      "key": "passProd",
+      "value": "SENHA_DO_ADMIN_NO_RENDER"
+    },
+    {
+      "key": "baseUrlLocal",
+      "value": "http://localhost:8082"
+    },
+    {
+      "key": "userLocal",
+      "value": "admin"
+    },
+    {
+      "key": "passLocal",
       "value": "admin123"
+    },
+    {
+      "key": "emailCliente",
+      "value": "SEU_EMAIL@gmail.com"
+    },
+    {
+      "key": "produtoId",
+      "value": "1"
+    },
+    {
+      "key": "compraId",
+      "value": "1"
     }
   ],
   "item": [
     {
-      "name": "1. Criar produto (ADMIN)",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+      "name": "A) Produção (Render) - sem envio de e-mail",
+      "item": [
+        {
+          "name": "1. Criar produto (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{userProd}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{passProd}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/mercado",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mercado"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Meia Esportiva\",\n  \"tipo\": \"Vestuário\",\n  \"setor\": \"Meias\",\n  \"tamanho\": \"M\",\n  \"preco\": 19.9,\n  \"custo\": 8.5,\n  \"estoque\": 50\n}"
+            }
           }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/mercado",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "mercado"
-          ]
         },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"nome\": \"Meia Esportiva\",\n  \"tipo\": \"Vestuário\",\n  \"setor\": \"Meias\",\n  \"tamanho\": \"M\",\n  \"preco\": 19.9,\n  \"custo\": 8.5,\n  \"estoque\": 50\n}"
-        }
-      }
-    },
-    {
-      "name": "2. Listar produtos",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+        {
+          "name": "2. Listar produtos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{userProd}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{passProd}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/mercado",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mercado"
+              ]
+            }
           }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/mercado",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "mercado"
-          ]
-        }
-      }
-    },
-    {
-      "name": "3. Criar compra (aprovada)",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/api/compras",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "compras"
-          ]
         },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"clienteNome\": \"Maria Silva\",\n  \"clienteEmail\": \"SEU_EMAIL@gmail.com\",\n  \"numeroCartao\": \"4111111111111111\",\n  \"itens\": [\n    {\n      \"produtoId\": 1,\n      \"quantidade\": 2\n    }\n  ]\n}"
-        }
-      }
-    },
-    {
-      "name": "4. Criar compra (cartão final 0000 = recusada)",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+        {
+          "name": "3. Criar compra (aprovada)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{userProd}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{passProd}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/compras",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "compras"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clienteNome\": \"Maria Silva\",\n  \"clienteEmail\": \"{{emailCliente}}\",\n  \"numeroCartao\": \"4111111111111111\",\n  \"itens\": [\n    { \"produtoId\": {{produtoId}}, \"quantidade\": 2 }\n  ]\n}"
+            }
           }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/api/compras",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "compras"
-          ]
         },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"clienteNome\": \"Maria Silva\",\n  \"clienteEmail\": \"SEU_EMAIL@gmail.com\",\n  \"numeroCartao\": \"4111111111110000\",\n  \"itens\": [\n    {\n      \"produtoId\": 1,\n      \"quantidade\": 2\n    }\n  ]\n}"
-        }
-      }
-    },
-    {
-      "name": "5. Consultar compra",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+        {
+          "name": "4. Criar compra (cartão final 0000 = recusada)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{userProd}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{passProd}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/compras",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "compras"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clienteNome\": \"Maria Silva\",\n  \"clienteEmail\": \"{{emailCliente}}\",\n  \"numeroCartao\": \"4111111111110000\",\n  \"itens\": [\n    { \"produtoId\": {{produtoId}}, \"quantidade\": 2 }\n  ]\n}"
+            }
           }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/api/compras/1",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "compras",
-            "1"
-          ]
-        }
-      }
-    },
-    {
-      "name": "6. Listar compras",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/api/compras",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "compras"
-          ]
-        }
-      }
-    },
-    {
-      "name": "7. Banco Tranquilo direto (simulador)",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/banco-tranquilo/api/pagamentos",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "banco-tranquilo",
-            "api",
-            "pagamentos"
-          ]
         },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"compraId\": 99,\n  \"titular\": \"Maria Silva\",\n  \"numeroCartao\": \"4111111111111111\",\n  \"valor\": 39.8\n}"
+        {
+          "name": "5. Consultar compra",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{userProd}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{passProd}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/compras/{{compraId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "compras",
+                "{{compraId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "6. Listar compras",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{userProd}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{passProd}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/compras",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "compras"
+              ]
+            }
+          }
+        },
+        {
+          "name": "7. Banco Tranquilo direto (simulador)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{userProd}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{passProd}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/banco-tranquilo/api/pagamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "banco-tranquilo",
+                "api",
+                "pagamentos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"compraId\": 99,\n  \"titular\": \"Maria Silva\",\n  \"numeroCartao\": \"4111111111111111\",\n  \"valor\": 39.8\n}"
+            }
+          }
         }
-      }
+      ]
+    },
+    {
+      "name": "B) Local - com envio de e-mail",
+      "item": [
+        {
+          "name": "8. Criar compra (aprovada, envia e-mail)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{userLocal}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{passLocal}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrlLocal}}/api/compras",
+              "host": [
+                "{{baseUrlLocal}}"
+              ],
+              "path": [
+                "api",
+                "compras"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clienteNome\": \"Maria Silva\",\n  \"clienteEmail\": \"{{emailCliente}}\",\n  \"numeroCartao\": \"4111111111111111\",\n  \"itens\": [\n    { \"produtoId\": {{produtoId}}, \"quantidade\": 2 }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "9. Consultar compra",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{userLocal}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{passLocal}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrlLocal}}/api/compras/{{compraId}}",
+              "host": [
+                "{{baseUrlLocal}}"
+              ],
+              "path": [
+                "api",
+                "compras",
+                "{{compraId}}"
+              ]
+            }
+          }
+        }
+      ]
     }
   ]
 }
