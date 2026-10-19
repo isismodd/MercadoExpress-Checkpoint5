@@ -82,7 +82,10 @@
         var lucroValores = /*[[${d.lucroValores}]]*/ [];
         var estLabels = /*[[${d.estoqueLabels}]]*/ [];
         var estValores = /*[[${d.estoqueValores}]]*/ [];
-        var statusValores = [/*[[${d.aprovadas}]]*/ 0, /*[[${d.recusadas}]]*/ 0, /*[[${d.pendentes}]]*/ 0];
+        var qtdAprovadas = /*[[${d.aprovadas}]]*/ 0;
+        var qtdRecusadas = /*[[${d.recusadas}]]*/ 0;
+        var qtdPendentes = /*[[${d.pendentes}]]*/ 0;
+        var statusValores = [qtdAprovadas, qtdRecusadas, qtdPendentes];
 
         new Chart(document.getElementById('cVendas'), {
             type: 'line',
