@@ -185,12 +185,13 @@ Resposta `202 Accepted` com `status: PENDENTE`; consulte `GET /api/compras/{id}`
 Tela de carrinho
 <img width="1222" height="594" alt="image" src="https://github.com/user-attachments/assets/26db6ba1-8a73-4539-902b-95199f1b7d6a" />
 
-status da compra
 
 Dashboard do RabbitMQ (exchange/filas)
 <img width="1335" height="756" alt="image" src="https://github.com/user-attachments/assets/717c944e-98de-44fd-8ffd-0c29da52a34a" />
 
-Postman
+Insomnia
+<img width="1917" height="926" alt="image" src="https://github.com/user-attachments/assets/7929387a-31d6-4807-a329-ca3740154c0f" />
+
 
 e-mail recebido
 <img width="948" height="339" alt="image" src="https://github.com/user-attachments/assets/24a7218d-d63b-494f-b84b-152353d169e5" />
